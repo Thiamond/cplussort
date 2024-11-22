@@ -5,10 +5,10 @@
 #include <sstream>  // for string stream
   int main(){
     std::vector<int> data;
-    std::ifstream inFile("ranbw50000.csv"); //open the csv
+    std::ifstream inFile("randbw50000.csv"); //open the csv
 
     if (!inFile.is_open()) {
-      std::cerr << "Error: Could not open the file." << std::end1;
+      std::cerr << "Error: Could not open the file." << std::ends;
       return 1;
     }
 
