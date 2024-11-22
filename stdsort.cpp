@@ -1,28 +1,30 @@
-#include <iostream>
+#include <iostream> // to print out to the console
 #include <fstream> // for file operations csv in this case
-#include <vector>  // to store data
+#include <vector>  // to store data from the csv
 #include <algorithm>  // for std::sort
-#include <sstream>  // for string stream
+#include <sstream>  // for splitting lines of text
   int main(){
-    std::vector<int> data;
-    std::ifstream inFile("randbw50000.csv"); //open the csv
+    std::vector<int> data; // vectors are dynamic, they can expand as we add in the numbers
+    std::ifstream inFile("randbw50000.csv"); //open the csv using file stream library
 
-    if (!inFile.is_open()) {
+    if (!inFile.is_open()) { //checks if the csv is open and returns true if so
       std::cerr << "Error: Could not open the file." << std::ends;
-      return 1;
+      return 1; // 0 for successful code, 1 for not
     }
 
-    std::string line, cell; 
+    std::string line, cell; // declaring the line and cell variables
 
     // Read the file line by line
-    while (std::getline(inFile, line)) {
-        std::stringstream lineStream(line);
+    while (std::getline(inFile, line)) { // keeps reading so far as there is a line
+        std::stringstream lineStream(line); // splits the data
 
         // Split the line into cells using a comma as a delimiter
-        while (std::getline(lineStream, cell, ',')) {
-            try {
-                data.push_back(std::stoi(cell)); // Convert the string to an integer
-            } catch (const std::invalid_argument&) {
+        while (std::getline(lineStream, cell, ',')) {// takes the lineStream (current
+                                                                // line) and wherever there is a comma
+                                                                // it splits the line into smaller pieces
+            try {   // an attempt at handling exceptions
+                data.push_back(std::stoi(cell)); // convert the string to an integer for sorting
+            } catch (const std::invalid_argument&) { // catches non-integers and reports below error
                 std::cerr << "Error: Invalid number found in CSV: " << cell << std::endl;
                 return 1;
             }
